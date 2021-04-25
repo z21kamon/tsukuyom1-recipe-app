@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block search %}
+<div class="search-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="" method="post" novalidate>
+                    <div class="search-form">
+                        {{ form.query_field() }}
+                        {{ form.submit() }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="small-recipe-area section-padding-80-0">
+    <div class="container">
+        <div class="row">
+            {% for recipe in recipes_list %}
+            <div class="col-auto col-sm-8 col-lg-auto">
+                <div class="single-small-recipe-area d-flex">
+
+                    <div class="recipe-thumb">
+                        <img src="{{ recipe.image_url }}" alt="">
+                    </div>
+
+                    <div class="recipe-content">
+                        <span>{{ recipe.date }}</span>
+                        <a href="/recipe-post/{{ recipe.id }}">
+                            <h5> {{ recipe.name }} </h5>
+                        </a>
+                        <span class="material-icons"> thumb_up </span> <p> {{ recipe.likes_count }} Likes </p>
+                        <span class="material-icons"> visibility </span> <p> {{ recipe.views_count }} Views </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block search %}
+<div class="search-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="" method="post" novalidate>
+                    <div class="search-form">
+                        {{ form.query_field() }}
+                        {{ form.submit() }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="single-small-recipe-area">
+    <h1> {{ recipe.name }} </h1>
+    <h5> <a href="/profile/{{ author.nickname }}"> {{ author.nickname }} </a> </h5>
+    <form action="" method="post" novalidate>
+        <div class="like-btn">
+            {{ like_btn.like() }}
+        </div>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <h6> {{ recipe.views_count }} views </h6>
+    <div class="ingredients">
+        {% for tag in json_tags %}
+            <div class="tag">
+                <p> <a href="/search?query={{ tag }}"> {{ tag }} </a> </p>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="ingredients">
+        <h4> Ingredients </h4>
+        <form>
+            {% for ing in json_ingredients %}
+            <label> {{ ing }}
+                <input type="checkbox"> <span class="custom-checkbox"></span> </label>
+            {% endfor %}
+        </form>
+    </div>
+    <div class="single-preparation-step">
+        <h4> Preparation </h4>
+    </div>
+</div>
+{% endblock %}
