@@ -32,7 +32,7 @@ class UsersListResource(Resource):
     def get(self):
         session = db_session.create_session()
         news = session.query(User).all()
-        return jsonify({'news': [item.to_dict() for item in news]})
+        return jsonify({'users': [item.to_dict() for item in news]})
 
     def post(self):
         args = user_parser.parse_args()
