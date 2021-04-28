@@ -17,7 +17,8 @@ class RecipesResource(Resource):
         abort_if_recipe_not_found(recipe_id)
         session = db_session.create_session()
         recipe = session.query(Recipe).get(recipe_id)
-        return jsonify({'recipe': recipe.to_dict()})
+        return jsonify({'recipe': recipe.to_dict(only=('author', 'cotw', 'date', 'description', 'id',
+                                                       'ingredients', 'prep_time', 'likers', 'tags'))})
 
     def delete(self, recipe_id):
         abort_if_recipe_not_found(recipe_id)
@@ -32,7 +33,9 @@ class RecipesListResource(Resource):
     def get(self):
         session = db_session.create_session()
         recipes = session.query(Recipe).all()
-        return jsonify({'recipes': [item.to_dict() for item in recipes]})
+        return jsonify({'recipes': [item.to_dict(only=('author', 'cotw', 'date', 'description', 'id',
+                                                       'ingredients', 'prep_time', 'likers', 'tags'))
+                                    for item in recipes]})
 
     def post(self):
         args = recipe_parser.parse_args()
@@ -43,7 +46,7 @@ class RecipesListResource(Resource):
             author=args['author'],
             prep_time=args['prep_time'],
             tags=args['tags'],
-            date=date['date'],
+            date=args['date'],
             description=args['description'],
             ingredients=args['ingredients'],
             image_url=args['imgae_url'],
